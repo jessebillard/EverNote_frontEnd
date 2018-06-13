@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', init)
 
     function renderNote(id) {
         Adapter.getOne(id).then(note => {
-            notePanel.innerHTML = `<form>
+            notePanel.innerHTML = `<form data-id="${note.id}">
                 <label id="title">Title:</label>
                 <input name="title" type="text" value="${note.title}">
                 <br>
                 <label id="body">Body:</label>
                 <textarea class="submission-field" name="body" type="text-area">${note.body}</textarea>
-                <submit >Submit!</submit>
+                <button id="submit-Btn">Submit!</button>
             </form>`
         })
     }
@@ -41,16 +41,24 @@ document.addEventListener('DOMContentLoaded', init)
  
 
     noteList.addEventListener('click', (e) => {
-       if (e.target.className === "delete") {
-        //delete shit
-        Adapter.deleteNote(e.target.dataset.id)
-        e.target.parentElement.remove()
-        } else if (e.target.className === "edit"){
-          
+
+        if (e.target.className === "delete") {
+            Adapter.deleteNote(e.target.dataset.id)
+            e.target.parentElement.remove()
+        } else if (e.target.className === "edit"){ 
             renderNote(e.target.dataset.id)
-            // debugger;
+            
         } 
            
+    })
+
+    notePanel.addEventListener('submit', (e) => {
+        const updatedData = {
+            "title": e.target.title.value,
+            "body": e.target.body.value
+        }
+        Adapter.editNote(e.target.dataset.id, updatedData)
+        Adapter.renderNoteList()
     })
     
 
