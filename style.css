@@ -6,7 +6,10 @@
     height: 100%;
     width: 45%;
     float: left;
+    /* overflow: scroll;
+    position: absolute; */
 }
+
 
 #note-panel-container {
     display: inline-grid;
@@ -16,6 +19,7 @@
     height: 100%;
     width: 45%;
     float: right;
+    position: fixed;
 }
 
 .submission-field {
